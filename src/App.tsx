@@ -32,7 +32,11 @@ import {
   Clock,
   ExternalLink,
   ShieldCheck,
-  Star
+  Star,
+  Mail,
+  Phone,
+  Gem,
+  CheckCircle
 } from 'lucide-react';
 
 // --- Types ---
@@ -357,76 +361,109 @@ const PROJECTS = [
 
 /**
  * FOOTER COMPONENT
- * Design Principle: Hierarchy & Trust
- * We use tiny uppercase micro-labels for navigation categories to create 
- * breathing room, and a bold gradient on the brand name for recognition.
+ * Design Principle: Professionalism & Clarity
  */
 const Footer = ({ onPageChange }: { onPageChange: (v: View) => void }) => {
   return (
-    <footer className="pt-32 pb-16 px-6 border-t bg-black border-neutral-900">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 mb-24">
-        <div className="md:col-span-2 lg:col-span-1">
-          <h2 className={`text-4xl font-black mb-6 bg-gradient-to-r ${BRAND_GRADIENT} bg-clip-text text-transparent italic tracking-tighter`}>AMARU</h2>
-          <p className="text-neutral-500 font-light leading-relaxed mb-8 max-w-sm">Premium Kenyan streetwear brand. Exquisite design, authentic culture, and bold attitude for the unstoppable.</p>
+    <footer className="pt-32 pb-48 px-6 border-t bg-black border-white/5 relative overflow-hidden">
+      {/* Background Accent */}
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#0096ff]/5 blur-[100px] pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+        {/* Brand Info */}
+        <div className="space-y-8">
+          <button onClick={() => onPageChange('customer')} className="flex flex-col items-start gap-1 group">
+            <span className={`text-4xl font-black bg-gradient-to-r ${BRAND_GRADIENT} bg-clip-text text-transparent tracking-[0.2em] leading-none transition-all group-hover:tracking-[0.25em] italic`}>
+              AMARU
+            </span>
+            <span className="text-[10px] uppercase font-black tracking-[0.4em] text-neutral-500">Exquisite $$ Embraced</span>
+          </button>
+          <p className="text-neutral-500 font-light leading-relaxed max-w-sm text-sm">
+            Revolutionary street luxury designed to empower identity and confidence. High-quality craftsmanship for those who define the culture.
+          </p>
           <div className="flex gap-4">
-            <button className="w-12 h-12 rounded-full border border-neutral-800 flex items-center justify-center hover:bg-[#0096ff] hover:text-white transition-all shadow-xl shadow-[#0096ff]/10">
-              <Instagram size={20} />
-            </button>
-            <button className="w-12 h-12 rounded-full border border-neutral-800 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-all shadow-xl">
-              <Facebook size={20} />
-            </button>
-            <button className="w-12 h-12 rounded-full border border-neutral-800 flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-xl">
-              <Twitter size={20} />
-            </button>
-            <button className="w-12 h-12 rounded-full border border-neutral-800 flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition-all shadow-xl">
-              <Youtube size={20} />
-            </button>
-            <button className="w-12 h-12 rounded-full border border-neutral-800 flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all shadow-xl">
-              <MessageCircle size={20} />
-            </button>
+            {[
+              { icon: <Instagram size={18} />, link: "#", color: "hover:bg-gradient-to-tr hover:from-purple-500 hover:to-orange-500" },
+              { icon: <Facebook size={18} />, link: "#", color: "hover:bg-[#1877F2]" },
+              { icon: <MessageCircle size={18} />, link: "https://tiktok.com", color: "hover:bg-black" } // Using MessageCircle as placeholder for TikTok if icon not avail
+            ].map((social, idx) => (
+              <button key={idx} className={`w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white transition-all ${social.color} shadow-xl`}>
+                {social.icon}
+              </button>
+            ))}
           </div>
         </div>
+
+        {/* Quick Links */}
         <div>
-          <div className="micro-label mb-8">Navigation</div>
-          <ul className="space-y-4 text-neutral-500 font-bold text-[10px] uppercase tracking-[0.2em]">
-            <li><button onClick={() => onPageChange('customer')} className="hover:text-[#0096ff] transition-colors">Home Archive</button></li>
-            <li><button onClick={() => onPageChange('shop')} className="hover:text-[#0096ff] transition-colors">Retail Space</button></li>
-            <li><button onClick={() => onPageChange('projects')} className="hover:text-[#0096ff] transition-colors">Projects Archive</button></li>
-            <li><button onClick={() => onPageChange('about')} className="hover:text-[#0096ff] transition-colors">Studio Story</button></li>
+          <div className="micro-label mb-10 text-white">Quick Links</div>
+          <ul className="space-y-6">
+            {['Home', 'Shop', 'About', 'Contact'].map((item) => (
+              <li key={item}>
+                <button 
+                  onClick={() => onPageChange(item.toLowerCase() as View)}
+                  className="text-neutral-500 hover:text-[#0096ff] font-black text-[11px] uppercase tracking-[0.3em] transition-all"
+                >
+                  {item}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
+
+        {/* Contact Details */}
         <div>
-          <div className="micro-label mb-8">Service</div>
-          <ul className="space-y-4 text-neutral-500 font-bold text-[10px] uppercase tracking-[0.2em]">
-            <li><button onClick={() => onPageChange('contact')} className="hover:text-[#0096ff] transition-colors">Concierge</button></li>
-            <li><span className="hover:text-[#0096ff] cursor-pointer transition-colors">Global Logistics</span></li>
-            <li><span className="hover:text-[#0096ff] cursor-pointer transition-colors">Exchanges</span></li>
+          <div className="micro-label mb-10 text-white">Contact Details</div>
+          <ul className="space-y-6">
+            <li className="flex items-center gap-4 group">
+               <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#0096ff]"><Phone size={16} /></div>
+               <div>
+                  <div className="text-[9px] uppercase font-black text-neutral-600 mb-0.5">Phone</div>
+                  <div className="text-[11px] font-black text-white">+254 746 746904</div>
+               </div>
+            </li>
+            <li className="flex items-center gap-4 group">
+               <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#0096ff]"><Mail size={16} /></div>
+               <div>
+                  <div className="text-[9px] uppercase font-black text-neutral-600 mb-0.5">Email</div>
+                  <div className="text-[11px] font-black text-white uppercase tracking-tight">info@amaruofficial.com</div>
+               </div>
+            </li>
+            <li className="flex items-center gap-4 group">
+               <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#0096ff]"><MapPin size={16} /></div>
+               <div>
+                  <div className="text-[9px] uppercase font-black text-neutral-600 mb-0.5">Location</div>
+                  <div className="text-[11px] font-black text-white">Kenya</div>
+               </div>
+            </li>
           </ul>
         </div>
+
+        {/* Branding Message */}
         <div>
-          <div className="micro-label mb-8">Studio</div>
-          <p className="text-neutral-400 text-[9px] uppercase font-black tracking-[0.3em] mb-4">Ma Creatives Studio™</p>
-          <p className="text-neutral-600 text-[10px] leading-relaxed mb-6">Redefining East African luxury through digital excellence and physical grit.</p>
-          <button 
-            onClick={() => onPageChange('login')}
-            className="text-[9px] font-black uppercase tracking-[0.4em] text-neutral-600 hover:text-[#0096ff] transition-all border-b border-transparent hover:border-[#0096ff]/30 pb-1"
-          >
-            Management Portal
-          </button>
+          <div className="micro-label mb-10 text-white">The Studio</div>
+          <div className="bg-neutral-900/50 p-8 rounded-[2rem] border border-white/5">
+             <p className="text-[11px] text-neutral-400 font-bold uppercase tracking-[0.2em] leading-relaxed mb-6">
+               Need a website like this?
+             </p>
+             <a 
+               href="https://macreativesstudio.github.io" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className="inline-flex items-center gap-3 text-[#0096ff] font-black uppercase text-[10px] tracking-[0.3em] hover:tracking-[0.35em] transition-all"
+             >
+               Talk to Ma Creatives Studio <ArrowRight size={14} />
+             </a>
+          </div>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto pt-16 border-t border-neutral-900 flex flex-col md:flex-row justify-between items-center gap-6">
-        <p className="micro-label opacity-40">© 2026 AMARU CLOTHING. All Rights Reserved.</p>
+
+      <div className="max-w-7xl mx-auto pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+        <p className="text-[9px] font-black uppercase tracking-[0.4em] text-neutral-600">
+          © 2026 AMARU OFFICIAL. All Rights Reserved.
+        </p>
         <div className="flex items-center gap-4">
-          <span className="micro-label opacity-40">Website Manifested by</span> 
-          <a 
-            href="https://macreativesstudio.github.io" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-[#0096ff] font-black uppercase text-[10px] tracking-[0.3em] hover:underline transition-all underline-offset-4"
-          >
-            Ma Creatives
-          </a>
+          <span className="text-[9px] font-black uppercase tracking-widest text-neutral-800">AMARU / ACCESS / GRIT</span>
         </div>
       </div>
     </footer>
@@ -441,6 +478,7 @@ const Navbar = ({ onViewChange, currentView, onSearchOpen, wishlistCount }: {
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -451,67 +489,77 @@ const Navbar = ({ onViewChange, currentView, onSearchOpen, wishlistCount }: {
   const navLinks = [
     { id: 'customer', label: 'Home' },
     { id: 'shop', label: 'Shop' },
-    { id: 'projects', label: 'Projects' },
     { id: 'about', label: 'About' },
     { id: 'contact', label: 'Contact' }
   ];
 
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    if (newTheme === 'light') {
+      document.documentElement.classList.add('light');
+    } else {
+      document.documentElement.classList.remove('light');
+    }
+  };
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-black/90 backdrop-blur-md py-3 border-neutral-800' 
-        : 'bg-black py-5 border-transparent'
+        ? 'bg-black/90 backdrop-blur-md py-4 border-b border-white/5 shadow-2xl shadow-black/50' 
+        : 'bg-black py-8 border-b border-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <button onClick={() => onViewChange('customer')} className="flex flex-col items-start gap-0.5">
-          <span className={`text-2xl font-black bg-gradient-to-r ${BRAND_GRADIENT} bg-clip-text text-transparent tracking-widest leading-none`}>
+        {/* Left Side: Brand Identity */}
+        <button onClick={() => onViewChange('customer')} className="flex flex-col items-start gap-1 group">
+          <span className={`text-2xl font-black bg-gradient-to-r ${BRAND_GRADIENT} bg-clip-text text-transparent tracking-[0.2em] leading-none transition-all group-hover:tracking-[0.25em]`}>
             AMARU
           </span>
-          <span className="micro-label">Street Classic</span>
+          <span className="text-[9px] uppercase font-black tracking-[0.4em] text-neutral-400">Exquisite $$ Embraced</span>
         </button>
 
-        <div className="hidden md:flex gap-8 items-center">
+        {/* Center: Navigation */}
+        <div className="hidden md:flex gap-12 items-center">
           {navLinks.map((link, idx) => (
             <button 
               key={`${link.id}-${idx}`}
               onClick={() => onViewChange(link.id as View)}
-              className={`text-[9px] font-black tracking-[0.3em] transition-all uppercase ${
-                currentView === link.id ? BRAND_TEXT : 'text-neutral-500 hover:text-[#0096ff]'
+              className={`text-[10px] font-black tracking-[0.4em] transition-all uppercase relative group ${
+                currentView === link.id ? BRAND_TEXT : 'text-neutral-500 hover:text-white'
               }`}
             >
               {link.label}
+              <span className={`absolute -bottom-2 left-0 h-0.5 bg-[#0096ff] transition-all duration-300 ${currentView === link.id ? 'w-full' : 'w-0 group-hover:w-full'}`} />
             </button>
           ))}
         </div>
 
-        <div className="flex items-center gap-2 md:gap-5">
+        {/* Right Side: Utils */}
+        <div className="flex items-center gap-3 md:gap-6">
+          <button 
+            onClick={() => window.open('https://wa.me/254746746904', '_blank')}
+            className="hidden sm:flex items-center gap-2 bg-[#25D366]/10 text-[#25D366] px-5 py-2.5 rounded-full border border-[#25D366]/20 text-[9px] font-black uppercase tracking-widest hover:bg-[#25D366] hover:text-white transition-all shadow-lg active:scale-95"
+          >
+            <MessageCircle size={14} /> WhatsApp
+          </button>
+          
+          <button 
+            onClick={toggleTheme}
+            className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-neutral-800 transition-all text-neutral-400 hover:text-white border border-white/5"
+          >
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+
           <button 
             onClick={onSearchOpen}
-            className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-neutral-900 transition-all text-neutral-400 hover:text-white"
+            className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-neutral-800 transition-all text-neutral-400 hover:text-white border border-white/5"
           >
-            <Search size={20} />
+            <Search size={18} />
           </button>
-          <button 
-            onClick={() => onViewChange('wishlist')}
-            className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-neutral-900 transition-all text-neutral-400 hover:text-white relative"
-          >
-            <Heart size={20} />
-            {wishlistCount > 0 && (
-              <span className="absolute top-2 right-2 w-2 h-2 bg-[#0096ff] rounded-full" />
-            )}
-          </button>
-          <button 
-            onClick={() => onViewChange('login')}
-            className="hidden lg:flex w-10 h-10 rounded-full items-center justify-center hover:bg-neutral-900 transition-all text-neutral-800 hover:text-[#0096ff] group relative"
-          >
-            <Zap size={18} />
-            <span className="absolute top-full mt-2 right-0 bg-black border border-neutral-800 px-3 py-1.5 rounded-md text-[8px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-              Nexus Terminal
-            </span>
-          </button>
+          
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden w-10 h-10 rounded-full flex items-center justify-center border bg-neutral-900 border-neutral-800 text-white"
+            className="md:hidden w-10 h-10 rounded-full flex items-center justify-center bg-neutral-900 border border-neutral-800 text-white"
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -521,12 +569,12 @@ const Navbar = ({ onViewChange, currentView, onSearchOpen, wishlistCount }: {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden fixed top-[73px] left-0 right-0 border-b p-6 z-40 bg-black border-neutral-800"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-black border-t border-white/5 overflow-hidden"
           >
-            <div className="flex flex-col gap-6">
+            <div className="p-10 flex flex-col gap-8">
               {navLinks.map((link, idx) => (
                 <button 
                   key={`mobile-${link.id}-${idx}`}
@@ -534,19 +582,20 @@ const Navbar = ({ onViewChange, currentView, onSearchOpen, wishlistCount }: {
                     onViewChange(link.id as View);
                     setIsMobileMenuOpen(false);
                   }}
-                  className="text-lg font-bold text-neutral-400 hover:text-[#0096ff] text-left uppercase tracking-widest"
+                  className={`text-2xl font-black uppercase tracking-tighter italic text-left ${currentView === link.id ? 'text-[#0096ff]' : 'text-neutral-500'}`}
                 >
                   {link.label}
                 </button>
               ))}
+              <hr className="border-white/5" />
               <button 
                 onClick={() => {
                    onViewChange('login');
                    setIsMobileMenuOpen(false);
                 }}
-                className="text-[10px] font-black uppercase tracking-widest text-neutral-600 hover:text-[#0096ff] transition-colors self-start border border-neutral-800 px-4 py-2 rounded-full"
+                className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-600 hover:text-[#0096ff] transition-colors self-start"
               >
-                Access Nexus
+                Access Nexus Portal
               </button>
             </div>
           </motion.div>
@@ -1409,50 +1458,308 @@ const ShopView = ({
 };
 
 // --- About View ---
-const AboutView = () => {
+const AboutView = ({ onPageChange }: { onPageChange: (v: View) => void }) => {
   return (
-    <section className="pt-48 pb-32 px-6 min-h-screen max-w-5xl mx-auto text-center">
-      <div className="micro-label mb-10">Our Story</div>
-      <h1 className="text-7xl font-light mb-16 uppercase tracking-tighter italic">REDEFINING <span className="font-black text-gradient">CULTURE</span></h1>
-      <p className="text-neutral-500 text-2xl font-light leading-relaxed mb-24 max-w-3xl mx-auto">
-        Born from the streets of Nairobi, AMARU is more than apparel. It is a rebellion against the ordinary. 
-        We create for the originals, the outcasts, and the leaders.
-      </p>
-      <div className="grid md:grid-cols-2 gap-12">
-        <div className="bg-neutral-900 p-16 rounded-[4rem] text-left border border-neutral-800">
-           <h3 className="text-3xl font-black mb-8 uppercase italic">Pure Excellence</h3>
-           <p className="text-neutral-500 font-medium">Every thread is chosen for longevity. Every design is crafted for impact. No shortcuts. Just AMARU.</p>
+    <div className="bg-black">
+      {/* SECTION 1 — HERO BANNER */}
+      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1544022613-e879a7935ed9?q=80&w=2000" 
+            alt="About AMARU" 
+            className="w-full h-full object-cover opacity-40 brightness-50"
+            loading="lazy"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black" />
         </div>
-        <div className="bg-[#0096ff]/5 p-16 rounded-[4rem] text-left border border-[#0096ff]/20">
-           <h3 className="text-3xl font-black mb-8 uppercase italic text-[#0096ff]">Nairobi Soul</h3>
-           <p className="text-neutral-400 font-medium">We represent the heart of East African creativity, taking local grit to a global stage.</p>
+        
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-6xl md:text-9xl font-black uppercase italic tracking-tighter mb-8 leading-none">
+              About <span className="text-gradient">AMARU</span>
+            </h1>
+            <p className="text-xl md:text-2xl font-light tracking-wide text-neutral-300 mb-12 max-w-2xl mx-auto leading-relaxed uppercase">
+              More Than Fashion — A Movement of Confidence, Identity, and Style
+            </p>
+            <button 
+              onClick={() => onPageChange('shop')}
+              className="bg-white text-black px-12 py-5 rounded-full font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#0096ff] hover:text-white transition-all shadow-2xl active:scale-95"
+            >
+              Shop the Collection
+            </button>
+          </motion.div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* SECTION 2 — OUR STORY */}
+      <section className="py-24 md:py-48 px-6 bg-black">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-col gap-12 text-center md:text-left">
+            <div className="micro-label text-[#0096ff]">Legacy</div>
+            <h2 className="text-5xl md:text-8xl font-black italic tracking-tighter uppercase leading-none">Our Story</h2>
+            <div className="space-y-8 text-neutral-400 text-xl md:text-2xl font-light leading-relaxed">
+              <p>
+                AMARU was created for individuals who refuse to blend in. 
+                We believe clothing is more than fabric — it is identity, confidence, and expression.
+              </p>
+              <p>
+                From our first design to every collection we release, our mission has remained the same: 
+                to deliver bold, stylish, and high-quality apparel that empowers people to own their attitude and embrace their uniqueness.
+              </p>
+              <p>
+                AMARU represents strength, creativity, and self-expression. 
+                Every piece we create is designed to help you stand out, feel confident, and express your personality.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3 & 4 — MISSION & VISION */}
+      <section className="py-24 px-6 border-y border-white/5 bg-[#050505]">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
+           <div className="bg-neutral-900/50 p-12 md:p-20 rounded-[3rem] border border-white/5 group hover:border-[#0096ff]/20 transition-all">
+              <div className="w-12 h-12 rounded-full bg-[#0096ff]/10 flex items-center justify-center text-[#0096ff] mb-8"><Award size={24} /></div>
+              <h3 className="text-3xl font-black uppercase italic mb-6 tracking-tighter">Our Mission</h3>
+              <p className="text-neutral-500 text-lg leading-relaxed font-light">
+                To deliver premium fashion that inspires confidence, creativity, and individuality while maintaining affordability and quality.
+              </p>
+           </div>
+           <div className="bg-neutral-900/50 p-12 md:p-20 rounded-[3rem] border border-white/5 group hover:border-[#0096ff]/20 transition-all">
+              <div className="w-12 h-12 rounded-full bg-[#0096ff]/10 flex items-center justify-center text-[#0096ff] mb-8"><Sparkles size={24} /></div>
+              <h3 className="text-3xl font-black uppercase italic mb-6 tracking-tighter">Our Vision</h3>
+              <p className="text-neutral-500 text-lg leading-relaxed font-light">
+                To become a recognized fashion brand known for bold design, quality craftsmanship, and customer satisfaction across Africa and beyond.
+              </p>
+           </div>
+        </div>
+      </section>
+
+      {/* SECTION 5 — OUR VALUES */}
+      <section className="py-32 px-6">
+        <div className="max-w-7xl mx-auto text-center mb-24">
+          <div className="micro-label mb-6 text-[#0096ff]">Foundation</div>
+          <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter">What We Stand For</h2>
+        </div>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+           {[
+             { title: "Quality", desc: "We use durable materials and modern design standards.", icon: <ShieldCheck size={32} /> },
+             { title: "Creativity", desc: "We embrace originality and innovation in fashion.", icon: <Zap size={32} /> },
+             { title: "Customer Satisfaction", desc: "We prioritize customer happiness and trust.", icon: <Heart size={32} /> },
+             { title: "Confidence", desc: "We empower people to express themselves boldly.", icon: <Award size={32} /> }
+           ].map((v, i) => (
+             <div key={i} className="bg-neutral-900/40 p-12 rounded-[2.5rem] border border-white/5 hover:border-[#0096ff]/40 transition-all group text-center">
+                <div className="text-[#0096ff] mb-8 flex justify-center group-hover:scale-110 transition-transform">{v.icon}</div>
+                <h4 className="text-xl font-black uppercase italic mb-4 tracking-tighter">{v.title}</h4>
+                <p className="text-neutral-500 text-sm font-light leading-relaxed">{v.desc}</p>
+             </div>
+           ))}
+        </div>
+      </section>
+
+      {/* SECTION 6 — WHY CHOOSE AMARU */}
+      <section className="py-32 px-6 bg-[#050505] border-y border-white/5">
+        <div className="max-w-7xl mx-auto mb-24">
+          <div className="micro-label mb-6 text-[#0096ff]">Value Proposition</div>
+          <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter">Why Choose AMARU</h2>
+        </div>
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+           {[
+             { title: "Premium Quality Materials", desc: "Higher-tier fabrics sourced for durability and elite feel.", icon: <Gem size={24} /> },
+             { title: "Modern Streetwear Designs", desc: "Cutting-edge silhouettes that redefine urban fashion.", icon: <LayoutGrid size={24} /> },
+             { title: "Affordable Pricing", desc: "Premium luxury experience without the gatekept prices.", icon: <Package size={24} /> },
+             { title: "Reliable Customer Support", desc: "Our concierge team is available to assist you 24/7.", icon: <MessageCircle size={24} /> },
+             { title: "Fast Delivery", desc: "Prompt dispatch and delivery both locally and globally.", icon: <Truck size={24} /> },
+             { title: "Trusted Brand", desc: "Join 500+ rebels who trust AMARU for their identity.", icon: <ShieldCheck size={24} /> }
+           ].map((item, i) => (
+             <div key={i} className="flex gap-8 p-10 bg-neutral-900 rounded-[2.5rem] border border-white/5 hover:border-[#0096ff]/20 transition-all backdrop-blur-xl">
+                <div className="w-14 h-14 shrink-0 rounded-2xl bg-[#0096ff]/10 flex items-center justify-center text-[#0096ff]">{item.icon}</div>
+                <div>
+                   <h5 className="text-lg font-black uppercase mb-2 tracking-tight">{item.title}</h5>
+                   <p className="text-neutral-500 text-sm font-light leading-relaxed">{item.desc}</p>
+                </div>
+             </div>
+           ))}
+        </div>
+      </section>
+
+      {/* SECTION 7 — CALL TO ACTION */}
+      <section className="py-24 md:py-48 px-6 text-center">
+        <div className="max-w-4xl mx-auto bg-gradient-to-br from-neutral-900 to-black p-12 md:p-32 rounded-[3.5rem] border border-white/5 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-full h-full bg-[#0096ff]/5 blur-[100px] pointer-events-none" />
+          <div className="relative z-10">
+            <h2 className="text-5xl md:text-8xl font-black uppercase italic tracking-tighter mb-8 leading-none">Join the Movement</h2>
+            <p className="text-neutral-400 text-xl md:text-2xl font-light mb-12 uppercase tracking-wide">
+              Step into confidence. Wear your identity. Experience the power of style with AMARU.
+            </p>
+            <button 
+              onClick={() => onPageChange('shop')}
+              className="bg-white text-black px-12 py-5 rounded-full font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#0096ff] hover:text-white transition-all shadow-2xl active:scale-95"
+            >
+              Shop Now
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
 // --- Contact View ---
 const ContactView = () => {
   return (
-    <section className="pt-48 pb-32 px-6 min-h-screen max-w-3xl mx-auto">
-       <div className="text-center mb-24">
-         <div className="micro-label mb-8">Connect</div>
-         <h1 className="text-7xl font-black uppercase tracking-tighter italic">GET IN <span className="text-gradient hover:animate-pulse cursor-default">TOUCH</span></h1>
-       </div>
-       <div className="grid gap-8">
-          <button 
-            onClick={() => window.open('https://wa.me/254746746904', '_blank')}
-            className="group p-10 bg-neutral-900 border border-neutral-800 rounded-[3rem] flex justify-between items-center hover:border-[#0096ff] transition-all"
+    <div className="bg-black">
+      {/* SECTION 1 — HERO SECTION */}
+      <section className="pt-48 pb-24 px-6 text-center">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
           >
-            <div className="text-left">
-              <div className="micro-label mb-2">WhatsApp</div>
-              <div className="text-2xl font-black text-white">+254 746 746904</div>
+             <div className="micro-label mb-6 text-[#0096ff]">Support Hub</div>
+             <h1 className="text-6xl md:text-9xl font-black uppercase italic tracking-tighter mb-8 leading-none">Contact <span className="text-gradient hover:animate-pulse cursor-default">AMARU</span></h1>
+             <p className="text-xl md:text-2xl font-light text-neutral-400 mb-6 uppercase tracking-widest">We're Here to Help You</p>
+             <p className="text-neutral-500 max-w-xl mx-auto font-light leading-relaxed">
+               Have a question about our products, orders, or delivery? Our team is ready to assist you.
+             </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SECTION 2 — CONTACT INFORMATION */}
+      <section className="py-24 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+           {[
+             { label: "Phone", val: "+254 746 746904", sub: "Direct Line", icon: <Phone size={24} />, link: "tel:+254746746904" },
+             { label: "WhatsApp", val: "Chat Online", sub: "Fast Response", icon: <MessageCircle size={24} />, link: "https://wa.me/254746746904" },
+             { label: "Email", val: "info@amaruofficial.com", sub: "Official Queries", icon: <Mail size={24} />, link: "mailto:info@amaruofficial.com" },
+             { label: "Location", val: "Kenya", sub: "Nairobi Core", icon: <MapPin size={24} /> }
+           ].map((card, i) => (
+             <a 
+               key={i} 
+               href={card.link}
+               target={card.link?.startsWith('http') ? "_blank" : undefined}
+               className="bg-neutral-900/50 p-10 rounded-[2.5rem] border border-white/5 hover:border-[#0096ff]/40 transition-all group flex flex-col items-center text-center"
+             >
+                <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-[#0096ff] mb-6 group-hover:scale-110 transition-transform">{card.icon}</div>
+                <div className="micro-label mb-2 opacity-40">{card.label}</div>
+                <div className="text-lg font-black uppercase mb-1">{card.val}</div>
+                <div className="text-[10px] text-neutral-600 font-bold uppercase tracking-widest">{card.sub}</div>
+             </a>
+           ))}
+        </div>
+        <div className="max-w-7xl mx-auto mt-12 bg-[#050505] p-10 rounded-[2.5rem] border border-white/5 text-center">
+           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+              <div className="flex items-center gap-3">
+                 <Clock size={20} className="text-[#0096ff]" />
+                 <span className="micro-label">Business Hours:</span>
+              </div>
+              <div className="text-lg font-black uppercase italic tracking-widest">Monday — Saturday: 8:00 AM — 6:00 PM</div>
+           </div>
+        </div>
+      </section>
+
+      {/* SECTION 3 — CONTACT FORM */}
+      <section className="py-24 px-6 bg-[#050505] border-y border-white/5">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-black uppercase italic tracking-tighter mb-4">Send a Manifest</h2>
+            <p className="text-neutral-500 font-light uppercase text-xs tracking-widest">Our agents will respond within 24 hours</p>
+          </div>
+          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-[9px] uppercase font-black tracking-widest text-neutral-600 ml-4">Full Name</label>
+                <input 
+                  type="text" 
+                  placeholder="EX: JOHN DOE"
+                  className="w-full bg-black/40 border border-white/5 rounded-2xl px-8 py-5 text-xs font-black tracking-widest focus:border-[#0096ff]/40 outline-none transition-all placeholder:text-neutral-800"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[9px] uppercase font-black tracking-widest text-neutral-600 ml-4">Email Address</label>
+                <input 
+                  type="email" 
+                  placeholder="EX: INFO@MAIL.COM"
+                  className="w-full bg-black/40 border border-white/5 rounded-2xl px-8 py-5 text-xs font-black tracking-widest focus:border-[#0096ff]/40 outline-none transition-all placeholder:text-neutral-800"
+                />
+              </div>
             </div>
-            <div className="bg-[#25D366] p-5 rounded-full group-hover:scale-110 transition-transform"><MessageCircle size={28} /></div>
-          </button>
-       </div>
-    </section>
+            <div className="space-y-2">
+              <label className="text-[9px] uppercase font-black tracking-widest text-neutral-600 ml-4">Phone Number</label>
+              <input 
+                type="tel" 
+                placeholder="+254 --- --- ---"
+                className="w-full bg-black/40 border border-white/5 rounded-2xl px-8 py-5 text-xs font-black tracking-widest focus:border-[#0096ff]/40 outline-none transition-all placeholder:text-neutral-800"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[9px] uppercase font-black tracking-widest text-neutral-600 ml-4">Message</label>
+              <textarea 
+                rows={6}
+                placeholder="WHAT'S ON YOUR MIND?"
+                className="w-full bg-black/40 border border-white/5 rounded-3xl px-8 py-6 text-xs font-black tracking-widest focus:border-[#0096ff]/40 outline-none transition-all placeholder:text-neutral-800 resize-none"
+              ></textarea>
+            </div>
+            <button 
+              className="w-full py-6 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:bg-[#0096ff] hover:text-white transition-all shadow-2xl active:scale-[0.98]"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </section>
+
+      {/* SECTION 4 — TRUST BUILDING */}
+      <section className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-24">
+            <div className="micro-label mb-6 text-[#0096ff]">Reliability</div>
+            <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter">Why Customers Trust AMARU</h2>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+             {[
+               { icon: <ShieldCheck size={28} />, title: "Secure Orders", desc: "Encoded checkout transmissions" },
+               { icon: <Clock size={28} />, title: "Fast Response Time", desc: "Under 12 hour response window" },
+               { icon: <Truck size={28} />, title: "Reliable Delivery", desc: "Verified global logistics network" },
+               { icon: <Heart size={28} />, title: "Customer Support", desc: "Human-centric concierge help" }
+             ].map((item, i) => (
+               <div key={i} className="text-center group">
+                  <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-8 text-[#0096ff] group-hover:bg-[#0096ff] group-hover:text-white transition-all shadow-xl shadow-[#0096ff]/10">
+                    {item.icon}
+                  </div>
+                  <h4 className="text-lg font-black uppercase italic tracking-tighter mb-2 leading-none">{item.title}</h4>
+                  <p className="text-neutral-600 text-[10px] font-black uppercase tracking-widest">{item.desc}</p>
+               </div>
+             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5 — WHATSAPP QUICK CONTACT */}
+      <section className="py-24 md:py-48 px-6 bg-black">
+        <div className="max-w-5xl mx-auto">
+          <div className="relative bg-gradient-to-r from-[#25D366]/20 to-transparent p-12 md:p-32 rounded-[3.5rem] border border-[#25D366]/20 overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="text-center md:text-left">
+               <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-none mb-6">Need Help Fast?</h2>
+               <p className="text-neutral-400 text-xl font-light uppercase tracking-widest max-w-sm">Chat with us instantly on WhatsApp and get quick assistance.</p>
+            </div>
+            <button 
+              onClick={() => window.open('https://wa.me/254746746904', '_blank')}
+              className="bg-[#25D366] text-white px-12 py-6 rounded-full font-black uppercase text-[10px] tracking-[0.4em] hover:scale-105 transition-all shadow-2xl shadow-[#25D366]/40 flex items-center gap-4"
+            >
+              <MessageCircle size={20} /> Chat on WhatsApp
+            </button>
+            <div className="absolute top-0 right-0 p-8 opacity-10"><MessageCircle size={200} /></div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
@@ -1818,7 +2125,7 @@ export default function App() {
               />
             )}
             {view === 'projects' && <ProjectsView />}
-            {view === 'about' && <AboutView />}
+            {view === 'about' && <AboutView onPageChange={handlePageChange} />}
             {view === 'contact' && <ContactView />}
             {view === 'admin' && <AdminView onPageChange={handlePageChange} orders={orders} />}
             {view !== 'admin' && <Footer onPageChange={handlePageChange} />}

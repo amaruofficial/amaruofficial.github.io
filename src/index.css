@@ -13,9 +13,46 @@
 
 @layer base {
   body {
-    @apply bg-black text-white antialiased font-light selection:bg-[#0096ff]/30 selection:text-white;
+    @apply bg-black text-white antialiased font-light selection:bg-[#0096ff]/30 selection:text-white transition-colors duration-500;
     scroll-behavior: smooth;
   }
+}
+
+/* Light Mode Overrides */
+.light body {
+  @apply bg-neutral-50 text-neutral-900 selection:bg-[#0096ff]/20 selection:text-neutral-900;
+}
+
+.light .bg-neutral-900, 
+.light .bg-neutral-900\/40, 
+.light .bg-neutral-900\/50 {
+  @apply bg-white border-neutral-200 shadow-sm transition-colors duration-500;
+}
+
+.light .bg-black {
+  @apply bg-white transition-colors duration-500;
+}
+
+.light .text-neutral-500 {
+  @apply text-neutral-400;
+}
+
+.light .text-neutral-400 {
+  @apply text-neutral-500;
+}
+
+.light .border-white\/5, 
+.light .border-neutral-800, 
+.light .border-neutral-900 {
+  @apply border-neutral-100 transition-colors duration-500;
+}
+
+.light .text-white {
+  @apply text-neutral-900 transition-colors duration-500;
+}
+
+.light .bg-[#050505] {
+  @apply bg-neutral-100 transition-colors duration-500;
 }
 
 /* Premium Components */
