@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700&display=swap');
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", sans-serif;
+  
+  --color-brand-primary: #0096ff;
+  --color-brand-secondary: #00d4ff;
+  --color-dark-surface: #0a0a0a;
+  --color-dark-card: #121212;
+}
+
+@layer base {
+  body {
+    @apply bg-black text-white antialiased font-light selection:bg-[#0096ff]/30 selection:text-white;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Premium Components */
+.nav-pill {
+  @apply border border-white/10 rounded-full px-6 py-2 text-[10px] font-black uppercase tracking-[0.2em] bg-transparent hover:bg-white/5 hover:border-[#0096ff]/40 transition-all cursor-pointer;
+}
+
+.micro-label {
+  @apply text-[10px] uppercase font-black text-neutral-500 tracking-[0.4em] leading-none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0096ff;
+}
+
+/* Gradients & Polished Styles */
+.hero-gradient {
+  background: radial-gradient(circle at top right, #0044ff15, transparent), 
+              radial-gradient(circle at bottom left, #00d4ff10, transparent);
+}
+
+.text-gradient {
+  @apply bg-gradient-to-r from-[#0096ff] to-[#00d4ff] bg-clip-text text-transparent;
+}
+
+.glass {
+  @apply bg-neutral-900/40 backdrop-blur-xl border border-white/5;
+}
+
+.card-hover {
+  @apply transition-all duration-500 hover:border-[#0096ff]/50 hover:bg-neutral-900/60 hover:-translate-y-1;
+}
+
+/* Magnetic Button Animation Hint */
+.magnetic {
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
