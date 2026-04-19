@@ -263,7 +263,7 @@ export const products = [
     name: "Beanie Three-Pack",
     price: 800,
     category: "ACCESSORIES",
-    image: "/images/beanie-pack.png",
+    image: "/images/beanie-pack.jpeg",
     badge: "BUNDLE DEAL",
     rating: 4.9,
     reviews: 145,
