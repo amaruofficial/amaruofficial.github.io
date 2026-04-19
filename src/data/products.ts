@@ -28,7 +28,7 @@ export const products = [
     name: "Black Sweatshirt",
     price: 750,
     category: "SWEATSHIRTS",
-    image: "/images/sweatshirt-black.png",
+    image: "public/images/sweatshirt-black.png",
     badge: "BEST SELLER",
     rating: 4.8,
     reviews: 124,
