@@ -189,7 +189,7 @@ export const products = [
     name: "Striped Shirt",
     price: 1000,
     category: "SHIRTS",
-    image: "/images/shirt-striped.png",
+    image: "/images/shirt-stripped.png",
     badge: null,
     rating: 4.6,
     reviews: 34,
